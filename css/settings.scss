@@ -1,0 +1,53 @@
+#file-update-notifications {
+    div > div {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+
+        label {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: nowrap;
+            position: relative;
+
+            span {
+                display: inline-block;
+                min-width: 200px;
+                padding: 8px 0px;
+            }
+
+            input {
+                min-width: 300px;
+            }
+
+            div#encryption_secret {
+                min-width: 300px;
+            }
+
+            div#destination_server_msg {
+                margin-left: 10px;
+                color: red;
+            }
+
+            div#destination_port_msg {
+                margin-left: 10px;
+                color: red;
+            }
+
+            div#notification_interval_msg {
+                margin-left: 10px;
+                color: red;
+            }
+
+            div#encryption_secret_msg {
+                margin-left: 10px;
+                color: red;
+            }
+        }
+
+        input {
+            width: 150px;
+        }
+    }
+}

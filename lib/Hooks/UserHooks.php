@@ -45,7 +45,7 @@ class UserHooks {
     }
 
     public function register() {
-        $callback = function(Node $node) {
+        $notification_callback = function(Node $node) {
             $dateTime = new \DateTime();
             $eventTime = $dateTime->getTimestamp();
             $this->logger->debug('time: ' . strval($eventTime));
@@ -131,6 +131,18 @@ class UserHooks {
             $context = stream_context_create($http_opts);
             $contents = file_get_contents($url, false, $context);
         };
-        $this->rootFolder->listen('\OC\Files', 'postWrite', $callback);
+        $this->rootFolder->listen('\OC\Files', 'postWrite', $notification_callback);
+
+        $cleanup_callback = function(Node $node) {
+            $fileid = $node->getId();
+            $entities = $this->mapper->findAll($fileid);
+            if (!empty($entities)) {
+                foreach ($entities as $entity) {
+                    $this->mapper->delete($entity);
+                }
+                $this->logger->info('delete all records related to the file.');
+            }
+        };
+        $this->rootFolder->listen('\OC\Files', 'preDelete', $cleanup_callback);
     }
 }

@@ -9,6 +9,7 @@ return [
         ['name' => 'Config#setConfig', 'url' => '/config', 'verb' => 'POST']
     ],
     'ocs' => [
-        ['name' => 'Config#deleteConfig', 'url' => '/api/config', 'verb' => 'DELETE']
+        ['name' => 'Config#deleteConfig', 'url' => '/api/config', 'verb' => 'DELETE'],
+        ['name' => 'Recent#getRecent', 'url' => '/api/recent', 'verb' => 'GET']
     ]
 ];

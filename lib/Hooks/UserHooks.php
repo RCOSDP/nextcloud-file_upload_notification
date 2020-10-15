@@ -121,11 +121,16 @@ class UserHooks {
                 'min_interval' => $interval,
                 'since' => $since
             ];
+            $response = json_encode($postbody);
+            $hash = hash_hmac("sha256", $json, $secret);
             $http_opts = [
                 'http' => [
                     'method' => 'POST',
-                    'header' => 'Content-type: application/json',
-                    'content' => json_encode($postbody)
+                    'header' => [
+                        'Content-type: application/json',
+                        'X-Nextcloud-File-Update-Notifications-Signature: ' . $hash
+                    ],
+                    'content' => $response
                 ]
             ];
             $context = stream_context_create($http_opts);

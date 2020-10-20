@@ -110,6 +110,7 @@ class RecentController extends OCSController {
         for ($i = 0; $i < $recordCount; $i++) {
             $element = [];
             $element['id'] = $records[$i]->getId();
+            $element['type'] = $records[$i]->getType() === Folder::TYPE_FILE ? 'file' : 'folder';
             $element['mtime'] = $records[$i]->getMtime();
             $element['name'] = $records[$i]->getName();
 

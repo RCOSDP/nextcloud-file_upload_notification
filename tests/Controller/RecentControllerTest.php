@@ -527,35 +527,40 @@ class RecentControllerTest extends \Test\TestCase {
                     'mtime' => 1,
                     'name' => 'aaa.txt',
                     'path' => '/aaa.txt',
-                    'modified_user' => 'userid'
+                    'modified_user' => 'userid',
+                    'type' => 'file'
                 ],
                 [
                     'id' => 2,
                     'mtime' => 2,
                     'name' => 'bbb.txt',
                     'path' => '/share_with_a/bbb.txt',
-                    'modified_user' => 'userA'
+                    'modified_user' => 'userA',
+                    'type' => 'file'
                 ],
                 [
                     'id' => 3,
                     'mtime' => 3,
                     'name' => 'ccc.txt',
                     'path' => '/share_with_b/ccc.txt',
-                    'modified_user' => 'userB'
+                    'modified_user' => 'userB',
+                    'type' => 'file'
                 ],
                 [
                     'id' => 4,
                     'mtime' => 4,
                     'name' => 'ddd.txt',
                     'path' => '/share_with_a/test/ddd.txt',
-                    'modified_user' => 'userA'
+                    'modified_user' => 'userA',
+                    'type' => 'file'
                 ],
                 [
                     'id' => 5,
                     'mtime' => 5,
                     'name' => 'eee.txt',
                     'path' => '/share_with_c/eee.txt',
-                    'modified_user' => 'userC'
+                    'modified_user' => 'userC',
+                    'type' => 'file'
                 ]
             ]
         ];
@@ -565,30 +570,35 @@ class RecentControllerTest extends \Test\TestCase {
         $file1->method('getMtime')->willReturn(1);
         $file1->method('getName')->willReturn('aaa.txt');
         $file1->method('getPath')->willReturn('/userid/files/aaa.txt');
+        $file1->method('getType')->willReturn('file');
 
         $file2 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file2->method('getId')->willReturn(2);
         $file2->method('getMtime')->willReturn(2);
         $file2->method('getName')->willReturn('bbb.txt');
         $file2->method('getPath')->willReturn('/userid/files/share_with_a/bbb.txt');
+        $file2->method('getType')->willReturn('file');
 
         $file3 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file3->method('getId')->willReturn(3);
         $file3->method('getMtime')->willReturn(3);
         $file3->method('getName')->willReturn('ccc.txt');
         $file3->method('getPath')->willReturn('/userid/files/share_with_b/ccc.txt');
+        $file3->method('getType')->willReturn('file');
 
         $file4 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file4->method('getId')->willReturn(4);
         $file4->method('getMtime')->willReturn(4);
         $file4->method('getName')->willReturn('ddd.txt');
         $file4->method('getPath')->willReturn('/userid/files/share_with_a/test/ddd.txt');
+        $file4->method('getType')->willReturn('file');
 
         $file5 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file5->method('getId')->willReturn(5);
         $file5->method('getMtime')->willReturn(5);
         $file5->method('getName')->willReturn('eee.txt');
         $file5->method('getPath')->willReturn('/userid/files/share_with_c/eee.txt');
+        $file5->method('getType')->willReturn('file');
 
         $entity1 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
             ->setMethods(['getUser'])
@@ -692,35 +702,40 @@ class RecentControllerTest extends \Test\TestCase {
                     'mtime' => 5,
                     'name' => 'eee.txt',
                     'path' => '/share_with_c/eee.txt',
-                    'modified_user' => 'userC'
+                    'modified_user' => 'userC',
+                    'type' => 'file'
                 ],
                 [
                     'id' => 4,
                     'mtime' => 4,
                     'name' => 'ddd.txt',
                     'path' => '/share_with_a/test/ddd.txt',
-                    'modified_user' => 'userA'
+                    'modified_user' => 'userA',
+                    'type' => 'file'
                 ],
                 [
                     'id' => 3,
                     'mtime' => 3,
                     'name' => 'ccc.txt',
                     'path' => '/share_with_b/ccc.txt',
-                    'modified_user' => 'userB'
+                    'modified_user' => 'userB',
+                    'type' => 'file'
                 ],
                 [
                     'id' => 2,
                     'mtime' => 2,
                     'name' => 'bbb.txt',
                     'path' => '/share_with_a/bbb.txt',
-                    'modified_user' => 'userA'
+                    'modified_user' => 'userA',
+                    'type' => 'file'
                 ],
                 [
                     'id' => 1,
                     'mtime' => 1,
                     'name' => 'aaa.txt',
                     'path' => '/aaa.txt',
-                    'modified_user' => 'userid'
+                    'modified_user' => 'userid',
+                    'type' => 'file'
                 ]
             ]
         ];
@@ -730,30 +745,35 @@ class RecentControllerTest extends \Test\TestCase {
         $file1->method('getMtime')->willReturn(1);
         $file1->method('getName')->willReturn('aaa.txt');
         $file1->method('getPath')->willReturn('/userid/files/aaa.txt');
+        $file1->method('getType')->willReturn('file');
 
         $file2 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file2->method('getId')->willReturn(2);
         $file2->method('getMtime')->willReturn(2);
         $file2->method('getName')->willReturn('bbb.txt');
         $file2->method('getPath')->willReturn('/userid/files/share_with_a/bbb.txt');
+        $file2->method('getType')->willReturn('file');
 
         $file3 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file3->method('getId')->willReturn(3);
         $file3->method('getMtime')->willReturn(3);
         $file3->method('getName')->willReturn('ccc.txt');
         $file3->method('getPath')->willReturn('/userid/files/share_with_b/ccc.txt');
+        $file3->method('getType')->willReturn('file');
 
         $file4 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file4->method('getId')->willReturn(4);
         $file4->method('getMtime')->willReturn(4);
         $file4->method('getName')->willReturn('ddd.txt');
         $file4->method('getPath')->willReturn('/userid/files/share_with_a/test/ddd.txt');
+        $file4->method('getType')->willReturn('file');
 
         $file5 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file5->method('getId')->willReturn(5);
         $file5->method('getMtime')->willReturn(5);
         $file5->method('getName')->willReturn('eee.txt');
         $file5->method('getPath')->willReturn('/userid/files/share_with_c/eee.txt');
+        $file5->method('getType')->willReturn('file');
 
         $entity1 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
             ->setMethods(['getUser'])

@@ -14,12 +14,6 @@ env:
 
 before_script:
   - sudo apt-get update
-  - php --ri zip
-  - php --ri gd
-  - php --ri curl
-  - php --ri sqlite3
-  - php --ri xml
-  - php --ri mbstring
   - sudo apt-get install ca-certificates curl xz-utils git
   - git clone https://github.com/nextcloud/server.git
   - mv server/ nextcloud

@@ -1,0 +1,12 @@
+language: php
+
+php:
+  - '7.4'
+
+before_script:
+  - apt-get update
+  - apt-get install php php-zip php-gd php-curl php-sqlite3 php-xml php-mbstring ca-certificates curl xz-utils git 
+
+script:
+  - php --version
+  - phpunit --version

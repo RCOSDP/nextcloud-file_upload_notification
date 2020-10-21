@@ -5,7 +5,7 @@ php:
 
 before_script:
   - sudo apt-get update
-  - dpkg-query -l php7.4 php7.4-zip php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-xml php7.4-mbstring ca-certificates curl xz-utils git
+  - sudo apt-get install  php7.4 php7.4-zip php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-xml php7.4-mbstring ca-certificates curl xz-utils git
 
 script:
   - php --version

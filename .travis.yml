@@ -35,6 +35,5 @@ before_script:
   - php occ app:enable file-update-notifications
 
 script:
-  - php --version
-  - phpunit --version
-  - env
+  - phpunit --bootstrap tests/bootstrap.php custom_apps/file-update-notifications/tests/Controller/ConfigControllerTest.php
+  - phpunit --bootstrap tests/bootstrap.php custom_apps/file-update-notifications/tests/Controller/RecentControllerTest.php

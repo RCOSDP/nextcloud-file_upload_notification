@@ -5,7 +5,13 @@ php:
 
 before_script:
   - sudo apt-get update
-  - sudo apt-get install  php7.4 php7.4-zip php7.4-gd php7.4-curl php7.4-sqlite3 php7.4-xml php7.4-mbstring ca-certificates curl xz-utils git
+  - php --ri zip
+  - php --ri gd
+  - php --ri curl
+  - php --ri sqlite3
+  - php --ri xml
+  - php --ri mbstring
+  - sudo apt-get install ca-certificates curl xz-utils git
 
 script:
   - php --version

@@ -11,6 +11,7 @@ env:
     - NEXTCLOUD_DB_PASSWD=password
     - NEXTCLOUD_ADMIN_NAME=admin
     - NEXTCLOUD_ADMIN_PASSWD=password
+    - NEXTCLOUD_APP=file-update-notifications
 
 before_script:
   - sudo apt-get update
@@ -25,8 +26,8 @@ before_script:
   - git submodule update --init
   - cd ..
   - php occ maintenance:install --database ${NEXTCLOUD_DB} --database-name ${NEXTCLOUD_DB_NAME} --database-user ${NEXTCLOUD_DB_USER} --database-pass ${NEXTCLOUD_DB_PASSWD} --admin-user ${NEXTCLOUD_ADMIN_NAME} --admin-pass ${NEXTCLOUD_ADMIN_PASSWD}
-  - cp -r ${TRAVIS_BUILD_DIR}/file-update-notifications custom_apps/
-  - php occ app:enable file-update-notifications
+  - cp -r ${TRAVIS_BUILD_DIR}/${NEXTCLOUD_APP} custom_apps/
+  - php occ app:enable ${NEXTCLOUD_APP}
 
 script:
   - phpunit --bootstrap tests/bootstrap.php custom_apps/file-update-notifications/tests/Controller/ConfigControllerTest.php

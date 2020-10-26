@@ -48,12 +48,21 @@ class ConfigController extends OCSController {
     /**
      * save configuration to user based store
      * @NoAdminRequired
+     * @param (string) $id - server id
      * @param (string) $url - server url to be notified
      * @param (string) $interval - notification interval
      * @param (string) $secret - secret used to protect notifications
      */
-    public function setConfig($url, $interval, $secret) :JSONResponse {
+    public function setConfig($id, $url, $interval, $secret) :JSONResponse {
         $data = [];
+
+        if (is_null($id)) {
+            $data['error'] = 'id is invalid';
+            return new JSONResponse(
+                $data,
+                Http::STATUS_BAD_REQUEST
+            );
+        }
 
         if (is_null($url)) {
             $data['error'] = 'url is invalid';
@@ -82,6 +91,7 @@ class ConfigController extends OCSController {
         $user = $this->userSession->getUser();
         $userId = $user->getUID();
         $data = [
+            'id' => $id,
             'url' => $url,
             'interval' => $interval,
             'secret' => $secret];

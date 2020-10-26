@@ -10,6 +10,13 @@ style('file-update-notifications', 'settings');
     <div>
         <div>
             <label>
+                <span><?php p($l->t('ID')); ?></span>
+                <input type="text" name="server" id="server_id" placeholder="Server name" required value>
+                <div id="server_id_msg"></div>
+            </label>
+        </div>
+        <div>
+            <label>
                 <span><?php p($l->t('Destination server')); ?></span>
                 <input type="text" name="server" id="destination_url" placeholder="https://srv.example.com/" required value>
                 <div id="destination_url_msg"></div>

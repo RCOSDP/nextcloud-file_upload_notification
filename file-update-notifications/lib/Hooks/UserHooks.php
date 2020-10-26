@@ -50,6 +50,11 @@ class UserHooks {
             $eventTime = $dateTime->getTimestamp();
             $this->logger->debug('time: ' . strval($eventTime));
 
+            if ($node->getType() === Node::TYPE_FOLDER) {
+                $this->logger->info('ignore folder');
+                return;
+            }
+
             $userSession = \OC::$server->getUserSession();
             $user = $userSession->getUser();
             $userId = $user->getUID();
@@ -77,6 +82,7 @@ class UserHooks {
             }
 
             $userConfig = json_decode($json, true);
+            $id = $userConfig['id'];
             $base_url = $userConfig['url'];
             $interval = $userConfig['interval'];
             $secret = $userConfig['secret'];
@@ -116,6 +122,7 @@ class UserHooks {
             $this->logger->debug('url: ' . $url);
 
             $postbody = [
+                'id' => $id,
                 'min_interval' => $interval,
                 'since' => $since
             ];

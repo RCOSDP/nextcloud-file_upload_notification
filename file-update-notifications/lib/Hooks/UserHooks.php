@@ -98,8 +98,6 @@ class UserHooks {
                     return;
                 }
             }
-            $this->logger->info('send a notification');
-            $this->config->setAppValue($this->appName, $prevTimeKey, $eventTime);
 
             /*
              * check since value
@@ -135,6 +133,8 @@ class UserHooks {
             ];
             $context = stream_context_create($http_opts);
             $contents = file_get_contents($url, false, $context);
+            $this->logger->info('send a notification');
+            $this->config->setAppValue($this->appName, $prevTimeKey, $eventTime);
         };
         $this->rootFolder->listen('\OC\Files', 'postWrite', $notification_callback);
 

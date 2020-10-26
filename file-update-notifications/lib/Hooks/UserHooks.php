@@ -122,7 +122,7 @@ class UserHooks {
                 'since' => $since
             ];
             $response = json_encode($postbody);
-            $hash = hash_hmac("sha256", $json, $secret);
+            $hash = hash_hmac("sha256", $response, $secret);
             $http_opts = [
                 'http' => [
                     'method' => 'POST',

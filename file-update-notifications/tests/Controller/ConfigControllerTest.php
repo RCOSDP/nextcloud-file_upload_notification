@@ -91,12 +91,14 @@ class ConfigControllerTest extends \Test\TestCase {
     }
 
     public function testSetConfig() :void {
+        $id = 'https://www.example.ac.jp/nextcloud:test1';
         $url = 'https://www.example.ac.jp/';
         $interval = '15';
         $secret = '4fdab23178d6c424196c9448070d3bef';
 
         $expected_status = Http::STATUS_OK;
         $expected_data = [
+            'id' => $id,
             'url' => $url,
             'interval' => $interval,
             'secret' => $secret
@@ -109,12 +111,36 @@ class ConfigControllerTest extends \Test\TestCase {
             $this->logger
         );
 
-        $result = $controller->setConfig($url, $interval, $secret);
+        $result = $controller->setConfig($id, $url, $interval, $secret);
+        $this->assertEquals($expected_status, $result->getStatus());
+        $this->assertEquals($expected_data, $result->getData());
+    }
+
+    public function testSetConfigArgumentIdIsNull() :void {
+        $id = null;
+        $url = 'https://www.example.ac.jp/';
+        $interval = '15';
+        $secret = '4fdab23178d6c424196c9448070d3bef';
+
+        $expected_status = Http::STATUS_BAD_REQUEST;
+        $expected_data = [
+            'error' => 'id is invalid'
+        ];
+
+        $controller = new ConfigController('file-update-notifications',
+            $this->request,
+            $this->config,
+            $this->userSession,
+            $this->logger
+        );
+
+        $result = $controller->setConfig($id, $url, $interval, $secret);
         $this->assertEquals($expected_status, $result->getStatus());
         $this->assertEquals($expected_data, $result->getData());
     }
 
     public function testSetConfigArgumentUrlIsNull() :void {
+        $id = 'https://www.example.ac.jp/nextcloud:test1';
         $url = null;
         $interval = '15';
         $secret = '4fdab23178d6c424196c9448070d3bef';
@@ -131,12 +157,13 @@ class ConfigControllerTest extends \Test\TestCase {
             $this->logger
         );
 
-        $result = $controller->setConfig($url, $interval, $secret);
+        $result = $controller->setConfig($id, $url, $interval, $secret);
         $this->assertEquals($expected_status, $result->getStatus());
         $this->assertEquals($expected_data, $result->getData());
     }
 
     public function testSetConfigArgumentIntervalIsNull() :void {
+        $id = 'https://www.example.ac.jp/nextcloud:test1';
         $url = 'https://www.example.ac.jp/';
         $interval = null;
         $secret = '4fdab23178d6c424196c9448070d3bef';
@@ -153,12 +180,13 @@ class ConfigControllerTest extends \Test\TestCase {
             $this->logger
         );
 
-        $result = $controller->setConfig($url, $interval, $secret);
+        $result = $controller->setConfig($id, $url, $interval, $secret);
         $this->assertEquals($expected_status, $result->getStatus());
         $this->assertEquals($expected_data, $result->getData());
     }
 
     public function testSetConfigArgumentIntervalIsInvalid() :void {
+        $id = 'https://www.example.ac.jp/nextcloud:test1';
         $url = 'https://www.example.ac.jp/';
         $secret = '4fdab23178d6c424196c9448070d3bef';
 
@@ -174,20 +202,21 @@ class ConfigControllerTest extends \Test\TestCase {
             $this->logger
         );
 
-        $result1 = $controller->setConfig($url, 'aaaa', $secret);
+        $result1 = $controller->setConfig($id, $url, 'aaaa', $secret);
         $this->assertEquals($expected_status, $result1->getStatus());
         $this->assertEquals($expected_data, $result1->getData());
 
-        $result2 = $controller->setConfig($url, '0', $secret);
+        $result2 = $controller->setConfig($id, $url, '0', $secret);
         $this->assertEquals($expected_status, $result2->getStatus());
         $this->assertEquals($expected_data, $result2->getData());
 
-        $result3 = $controller->setConfig($url, '-1', $secret);
+        $result3 = $controller->setConfig($id, $url, '-1', $secret);
         $this->assertEquals($expected_status, $result3->getStatus());
         $this->assertEquals($expected_data, $result3->getData());
     }
 
     public function testSetConfigArgumentSecretIsNull() :void {
+        $id = 'https://www.example.ac.jp/nextcloud:test1';
         $url = 'https://www.example.ac.jp/';
         $interval = '10';
         $secret = null;
@@ -204,12 +233,13 @@ class ConfigControllerTest extends \Test\TestCase {
             $this->logger
         );
 
-        $result = $controller->setConfig($url, $interval, $secret);
+        $result = $controller->setConfig($id, $url, $interval, $secret);
         $this->assertEquals($expected_status, $result->getStatus());
         $this->assertEquals($expected_data, $result->getData());
     }
 
     public function testSetConfigArgumentSecretIsInvalid() :void {
+        $id = 'https://www.example.ac.jp/nextcloud:test1';
         $url = 'https://www.example.ac.jp/';
         $interval = '10';
 
@@ -226,11 +256,11 @@ class ConfigControllerTest extends \Test\TestCase {
             $this->logger
         );
 
-        $result1 = $controller->setConfig($url, $interval, 'aaa');
+        $result1 = $controller->setConfig($id, $url, $interval, 'aaa');
         $this->assertEquals($expected_status, $result1->getStatus());
         $this->assertEquals($expected_data, $result1->getData());
 
-        $result2 = $controller->setConfig($url, $interval, 'zzzzzzzz');
+        $result2 = $controller->setConfig($id, $url, $interval, 'zzzzzzzz');
         $this->assertEquals($expected_status, $result2->getStatus());
         $this->assertEquals($expected_data, $result2->getData());
     }

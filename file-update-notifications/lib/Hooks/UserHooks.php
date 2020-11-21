@@ -20,7 +20,6 @@ class UserHooks {
     private $rootFolder;
     private $mapper;
     private $logger;
-    private $grdmUriPath = '/api/v1/addons/nextcloudinstitutions/webhook/';
 
     public function __construct($appName,
                                 IConfig $config,
@@ -83,7 +82,7 @@ class UserHooks {
 
             $userConfig = json_decode($json, true);
             $id = $userConfig['id'];
-            $base_url = $userConfig['url'];
+            $url = $userConfig['url'];
             $interval = $userConfig['interval'];
             $secret = $userConfig['secret'];
 
@@ -118,7 +117,6 @@ class UserHooks {
             /*
              * connect to the server
              */
-            $url = $base_url . $this->grdmUriPath;
             $this->logger->debug('url: ' . $url);
 
             $postbody = [

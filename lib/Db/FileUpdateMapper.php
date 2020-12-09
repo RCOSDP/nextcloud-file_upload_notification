@@ -12,7 +12,7 @@ use OCP\IDBConnection;
 class FileUpdateMapper extends QBMapper {
 
     public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'file_update_notifications', FileUpdate::class);
+        parent::__construct($db, 'file_upload_notif', FileUpdate::class);
     }
 
     public function find(int $fileid, int $mtime) {

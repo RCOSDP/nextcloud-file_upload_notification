@@ -16,13 +16,15 @@ use OCP\IUserSession;
 use OC\Files\View;
 
 use OCA\FileUploadNotification\Db\FileUpdateMapper;
+use OCA\FileUploadNotification\Db\FileCacheExtendedMapper;
 
 class RecentController extends OCSController {
 
     private $config;
     private $rootFolder;
     private $userSession;
-    private $mapper;
+    private $updateMapper;
+    private $cacheExtendedMapper;
     private $logger;
 
     public function __construct($appName,
@@ -30,14 +32,29 @@ class RecentController extends OCSController {
                                 IConfig $config,
                                 IRootFolder $rootFolder,
                                 IUserSession $userSession,
-                                FileUpdateMapper $mapper,
+                                FileUpdateMapper $updateMapper,
+                                FileCacheExtendedMapper $cacheExtendedMapper,
                                 ILogger $logger) {
         parent::__construct($appName, $request);
         $this->config = $config;
         $this->rootFolder = $rootFolder;
         $this->userSession = $userSession;
-        $this->mapper = $mapper;
+        $this->updateMapper = $updateMapper;
+        $this->cacheExtendedMapper = $cacheExtendedMapper;
         $this->logger = $logger;
+    }
+
+    private function sortByUploadTime(array $records) :array {
+        $callback = function ($a, $b) :int {
+            $timeA = $a->getUploadTime();
+            $timeB = $b->getUploadTime();
+            if ($timeA == $timeB) {
+                return 0;
+            }
+            return ($timeA < $timeB) ? 1 : -1;
+        };
+        usort($records, $callback);
+        return $records;
     }
 
     private function getUniqueRecords(array $records) :array {
@@ -45,32 +62,17 @@ class RecentController extends OCSController {
         $recordCount = count($records);
         for ($i = 0; $i < $recordCount; $i++) {
             $id = $records[$i]->getId();
-            if (array_key_exists($id, $tmp) === false || ($tmp[$id]->getMtime() < $records[$i]->getMtime())) {
+            if (array_key_exists($id, $tmp) === false || ($tmp[$id]->getUploadTime() < $records[$i]->getUploadTime())) {
                 $tmp[$id] = $records[$i];
             }
         }
-
-        $results = array_values($tmp);
-
-        $callback = function ($a, $b) :int {
-            $MTimeA = $a->getMtime();
-            $MTimeB = $b->getMtime();
-            if ($MTimeA == $MTimeB) {
-                return 0;
-            }
-
-            return ($MTimeA > $MTimeB) ? 1 : -1;
-        };
-        usort($results, $callback);
-        $results = array_reverse($results);
-
-        return $results;
+        return array_values($tmp);
     }
 
     private function includeRecordsBeforeTime(array $records, int $time) :bool {
         $recordCount = count($records);
         for ($i = 0; $i < $recordCount; $i++) {
-            if ($records[$i]->getMtime() < $time) {
+            if ($records[$i]->getUploadTime() < $time) {
                 return true;
             }
         }
@@ -78,12 +80,43 @@ class RecentController extends OCSController {
         return false;
     }
 
+    private function recentUploadSearch($limit, $offset) {
+        return $this->cacheExtendedMapper->findAll($limit, $offset);
+    }
+
+    private function getRecentUpload($folder, $limit, $offset = 0) {
+        $searchLimit = 500;
+        $results = [];
+        $searchResultCount = 0;
+        $count = 0;
+        do {
+            $searchResult = $this->recentUploadSearch($searchLimit, $offset);
+
+            // Exit condition if there are no more results
+            if (count($searchResult) === 0) {
+                break;
+            }
+
+            $searchResultCount += count($searchResult);
+
+            foreach ($searchResult as $result) {
+                $files = $folder->getById(intval($result->getFileid()));
+                $results = array_merge($results, $files);
+            }
+
+            $offset += $searchLimit;
+            $count++;
+        } while (count($results) < $limit && ($searchResultCount < (3 * $limit) || $count < 5));
+
+        return array_slice($results, 0, $limit);
+    }
+
     private function getRecentRecords(Folder $folder, int $limit, int $since) :array {
         $totalRecords = [];
         for ($offset = 0, $recordCount = $limit, $records = [];
             !$this->includeRecordsBeforeTime($records, $since) && $recordCount === $limit;
             $offset += $limit, $recordCount = count($records)) {
-            $records = $folder->getRecent($limit, $offset);
+            $records = $this->getRecentUpload($folder, $limit, $offset);
             $totalRecords = array_merge($totalRecords, $records);
         }
 
@@ -93,7 +126,7 @@ class RecentController extends OCSController {
     private function selectRecords(array $records, int $since) :array {
         $results= [];
         for ($i = 0, $recordCount = count($records); $i < $recordCount; $i++) {
-            if ($records[$i]->getMtime() >= $since) {
+            if ($records[$i]->getUploadTime() >= $since) {
                 array_push($results, $records[$i]);
             }
         }
@@ -111,13 +144,14 @@ class RecentController extends OCSController {
             $element = [];
             $element['id'] = $records[$i]->getId();
             $element['type'] = $records[$i]->getType() === Folder::TYPE_FILE ? 'file' : 'folder';
-            $element['mtime'] = $records[$i]->getMtime();
+            $element['time'] = $records[$i]->getUploadTime();
             $element['name'] = $records[$i]->getName();
 
             $path = explode($userFolderPrefix, $records[$i]->getPath(), 2);
             $element['path'] = $path[1];
 
-            $entity = $this->mapper->find($element['id'], $element['mtime']);
+            $mtime = $records[$i]->getMtime();
+            $entity = $this->updateMapper->find($element['id'], $mtime);
             if (is_null($entity)) {
                 $element['modified_user'] = '';
             } else {
@@ -161,6 +195,7 @@ class RecentController extends OCSController {
          * get recoreds up to specified value by since
          */
         $totalRecords = $this->getRecentRecords($userFolder, 1000, intval($since));
+        $totalRecords = $this->sortByUploadTime($totalRecords);
         $totalRecords = $this->getUniqueRecords($totalRecords);
 
         if (count($totalRecords) === 0) {
@@ -175,9 +210,11 @@ class RecentController extends OCSController {
         /*
          * get records updated during the acquisition process
          */
-        $latestMtime = $totalRecords[0]->getMtime();
-        $additionalRecords = $this->getRecentRecords($userFolder, 100, $latestMtime);
-        $totalRecords = $this->getUniqueRecords(array_merge($additionalRecords, $totalRecords));
+        $latestTime = $totalRecords[0]->getUploadtime();
+        $additionalRecords = $this->getRecentRecords($userFolder, 100, $latestTime);
+        $totalRecords = array_merge($additionalRecords, $totalRecords);
+        $totalRecords = $this->sortByUploadTime($totalRecords);
+        $totalRecords = $this->getUniqueRecords($totalRecords);
         $totalRecords = $this->selectRecords($totalRecords, intval($since));
         $data = $this->constructResponse($totalRecords, $userId);
 
@@ -185,8 +222,8 @@ class RecentController extends OCSController {
          * set since value for hook function
          */
         $sinceKey = $userId . '#since';
-        $this->config->setAppValue($this->appName, $sinceKey, $totalRecords[0]->getMtime());
-        $this->logger->info('set since: ' . strval($totalRecords[0]->getMtime()));
+        $this->config->setAppValue($this->appName, $sinceKey, $totalRecords[0]->getUploadTime());
+        $this->logger->info('set since: ' . strval($totalRecords[0]->getUploadTime()));
 
         return new DataResponse(
             $data,

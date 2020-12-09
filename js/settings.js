@@ -15,7 +15,7 @@ $(document).ready(function() {
                 }
         };
 
-        var url = OC.generateUrl('/apps/file-update-notifications/config');
+        var url = OC.generateUrl('/apps/file_upload_notification/config');
         $.get(url, function(response) {
                 if (response === null || response === undefined || response.length === 0) {
                         return;
@@ -88,7 +88,7 @@ $(document).ready(function() {
         });
 
         $('#create_secret').click(function() {
-                var url = OC.generateUrl('/apps/file-update-notifications/secret');
+                var url = OC.generateUrl('/apps/file_upload_notification/secret');
                 var params = {length: 16};
                 $.get(url, params, function(response) {
                         $('#encryption_secret').text(response['secret']);
@@ -133,7 +133,7 @@ $(document).ready(function() {
                         return;
                 }
 
-                var url = OC.generateUrl('/apps/file-update-notifications/config');
+                var url = OC.generateUrl('/apps/file_upload_notification/config');
                 var params = {
                         id: $('#server_id').val(),
                         url: $('#destination_url').val(),

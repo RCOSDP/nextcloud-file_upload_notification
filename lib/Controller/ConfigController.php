@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Controller;
+namespace OCA\FileUploadNotification\Controller;
 
 use OCP\AppFramework\OCSController;
 use OCP\AppFramework\Http;

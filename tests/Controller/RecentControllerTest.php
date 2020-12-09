@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Tests\Controller;
+namespace OCA\FileUploadNotification\Tests\Controller;
 
 use OC\Files\Node\Root;
 use OCP\AppFramework\Http;
@@ -15,9 +15,9 @@ use OCP\IUser;
 use OCP\IUserSession;
 use PHPUnit\Framework\TestCase;
 
-use OCA\FileUpdateNotifications\Controller\RecentController;
-use OCA\FileUpdateNotifications\Db\FileUpdateMapper;
-use OCA\FileUpdateNotifications\Db\FileUpdate;
+use OCA\FileUploadNotification\Controller\RecentController;
+use OCA\FileUploadNotification\Db\FileUpdateMapper;
+use OCA\FileUploadNotification\Db\FileUpdate;
 
 class RecentControllerTest extends \Test\TestCase {
 
@@ -64,7 +64,7 @@ class RecentControllerTest extends \Test\TestCase {
     }
 
     public function testIncludeRecordsBeforeTime() {
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $this->rootFolder,
@@ -132,7 +132,7 @@ class RecentControllerTest extends \Test\TestCase {
     public function testIncludeRecordsBeforeTimeWithEmtpyArray() {
         $expected_data = false;
 
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $this->rootFolder,
@@ -172,7 +172,7 @@ class RecentControllerTest extends \Test\TestCase {
         $file5 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file5->method('getMtime')->willReturn(5);
 
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $this->rootFolder,
@@ -419,7 +419,7 @@ class RecentControllerTest extends \Test\TestCase {
         $file5->method('getId')->willReturn(5);
         $file5->method('getMtime')->willReturn(5);
 
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $this->rootFolder,
@@ -444,7 +444,7 @@ class RecentControllerTest extends \Test\TestCase {
     public function testGetUniqueRecordsWithEmptyArray() :void {
         $expected_data = [];
 
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $this->rootFolder,
@@ -476,7 +476,7 @@ class RecentControllerTest extends \Test\TestCase {
         $file5 = $this->getMockBuilder('OCP\Files\Folder')->getMock();
         $file5->method('getMtime')->willReturn(5);
 
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $this->rootFolder,
@@ -600,22 +600,22 @@ class RecentControllerTest extends \Test\TestCase {
         $file5->method('getPath')->willReturn('/userid/files/share_with_c/eee.txt');
         $file5->method('getType')->willReturn('file');
 
-        $entity1 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
+        $entity1 = $this->getMockBuilder('OCA\FileUploadNotification\Db\FileUpdate')
             ->setMethods(['getUser'])
             ->getMock();
         $entity1->method('getUser')->willReturn('userid');
 
-        $entity2 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
+        $entity2 = $this->getMockBuilder('OCA\FileUploadNotification\Db\FileUpdate')
             ->setMethods(['getUser'])
             ->getMock();
         $entity2->method('getUser')->willReturn('userA');
 
-        $entity3 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
+        $entity3 = $this->getMockBuilder('OCA\FileUploadNotification\Db\FileUpdate')
             ->setMethods(['getUser'])
             ->getMock();
         $entity3->method('getUser')->willReturn('userB');
 
-        $entity4 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
+        $entity4 = $this->getMockBuilder('OCA\FileUploadNotification\Db\FileUpdate')
             ->setMethods(['getUser'])
             ->getMock();
         $entity4->method('getUser')->willReturn('userC');
@@ -630,7 +630,7 @@ class RecentControllerTest extends \Test\TestCase {
         $mapper = $this->getMockBuilder(FileUpdateMapper::class)->disableOriginalConstructor()->getMock();
         $mapper->method('find')->will($this->returnValueMap($map));
 
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $this->rootFolder,
@@ -648,7 +648,7 @@ class RecentControllerTest extends \Test\TestCase {
         $expected_status = Http::STATUS_BAD_REQUEST;
         $expected_data = 'query parameter since is missing';
 
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $this->rootFolder,
@@ -669,7 +669,7 @@ class RecentControllerTest extends \Test\TestCase {
         $expected_status = Http::STATUS_BAD_REQUEST;
         $expected_data = 'since is invalid number';
 
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $this->rootFolder,
@@ -775,22 +775,22 @@ class RecentControllerTest extends \Test\TestCase {
         $file5->method('getPath')->willReturn('/userid/files/share_with_c/eee.txt');
         $file5->method('getType')->willReturn('file');
 
-        $entity1 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
+        $entity1 = $this->getMockBuilder('OCA\FileUploadNotification\Db\FileUpdate')
             ->setMethods(['getUser'])
             ->getMock();
         $entity1->method('getUser')->willReturn('userid');
 
-        $entity2 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
+        $entity2 = $this->getMockBuilder('OCA\FileUploadNotification\Db\FileUpdate')
             ->setMethods(['getUser'])
             ->getMock();
         $entity2->method('getUser')->willReturn('userA');
 
-        $entity3 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
+        $entity3 = $this->getMockBuilder('OCA\FileUploadNotification\Db\FileUpdate')
             ->setMethods(['getUser'])
             ->getMock();
         $entity3->method('getUser')->willReturn('userB');
 
-        $entity4 = $this->getMockBuilder('OCA\FileUpdateNotifications\Db\FileUpdate')
+        $entity4 = $this->getMockBuilder('OCA\FileUploadNotification\Db\FileUpdate')
             ->setMethods(['getUser'])
             ->getMock();
         $entity4->method('getUser')->willReturn('userC');
@@ -818,7 +818,7 @@ class RecentControllerTest extends \Test\TestCase {
         $rootFolder = $this->getMockBuilder('OCP\Files\IRootFolder')->getMock();
         $rootFolder->method('getUserFolder')->with('userid')->willReturn($userFolder);
 
-        $controller = new RecentController('file-update-notifications',
+        $controller = new RecentController('file_upload_notification',
             $this->request,
             $this->config,
             $rootFolder,

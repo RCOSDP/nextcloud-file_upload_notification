@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Settings;
+namespace OCA\FileUploadNotification\Settings;
 
 use OCP\IL10N;
 use OCP\IURLGenerator;
@@ -20,15 +20,15 @@ class PersonalSection implements IIconSection {
         }
 
         public function getIcon() {
-                return $this->url->imagePath('file-update-notifications', 'changeme.svg');
+                return $this->url->imagePath('file_upload_notification', 'changeme.svg');
         }
 
         public function getID() {
-                return 'file-update-notifications';
+                return 'file_upload_notification';
         }
 
         public function getName() {
-                return $this->l->t('File Update Notifications');
+                return $this->l->t('File Upload Notification');
         }
 
         public function getPriority() {

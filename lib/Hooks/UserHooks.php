@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Hooks;
+namespace OCA\FileUploadNotification\Hooks;
 
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
@@ -10,8 +10,8 @@ use OCP\IConfig;
 use OCP\ILogger;
 use OC\Files\Node\Node;
 
-use OCA\FileUpdateNotifications\Db\FileUpdate;
-use OCA\FileUpdateNotifications\Db\FileUpdateMapper;
+use OCA\FileUploadNotification\Db\FileUpdate;
+use OCA\FileUploadNotification\Db\FileUpdateMapper;
 
 class UserHooks {
 

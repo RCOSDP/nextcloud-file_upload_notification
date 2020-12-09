@@ -1,11 +1,11 @@
 <?php
 
-script('file-update-notifications', 'settings');
-style('file-update-notifications', 'settings');
+script('file_upload_notification', 'settings');
+style('file_upload_notification', 'settings');
 ?>
 
-<div id="file-update-notifications" class="section">
-    <h2 class="inlineblock"><?php p($l->t('File Update Notifications')); ?></h2>
+<div id="file_upload_notification" class="section">
+    <h2 class="inlineblock"><?php p($l->t('File Upload Notification')); ?></h2>
     <p class="settings-hint"></p>
     <div>
         <div>

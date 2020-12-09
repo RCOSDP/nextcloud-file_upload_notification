@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Tests\Controller;
+namespace OCA\FileUploadNotification\Tests\Controller;
 
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
@@ -14,7 +14,7 @@ use OCP\IUserSession;
 use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\TestCase;
 
-use OCA\FileUpdateNotifications\Controller\ConfigController;
+use OCA\FileUploadNotification\Controller\ConfigController;
 
 class ConfigControllerTest extends \Test\TestCase {
 
@@ -47,7 +47,7 @@ class ConfigControllerTest extends \Test\TestCase {
     public function testCreateSecret() :void {
         $expected_status = Http::STATUS_OK;
 
-        $controller = new ConfigController('file-update-notifications',
+        $controller = new ConfigController('file_upload_notification',
             $this->request,
             $this->config,
             $this->userSession,
@@ -104,7 +104,7 @@ class ConfigControllerTest extends \Test\TestCase {
             'secret' => $secret
         ];
 
-        $controller = new ConfigController('file-update-notifications',
+        $controller = new ConfigController('file_upload_notification',
             $this->request,
             $this->config,
             $this->userSession,
@@ -127,7 +127,7 @@ class ConfigControllerTest extends \Test\TestCase {
             'error' => 'id is invalid'
         ];
 
-        $controller = new ConfigController('file-update-notifications',
+        $controller = new ConfigController('file_upload_notification',
             $this->request,
             $this->config,
             $this->userSession,
@@ -150,7 +150,7 @@ class ConfigControllerTest extends \Test\TestCase {
             'error' => 'url is invalid'
         ];
 
-        $controller = new ConfigController('file-update-notifications',
+        $controller = new ConfigController('file_upload_notification',
             $this->request,
             $this->config,
             $this->userSession,
@@ -173,7 +173,7 @@ class ConfigControllerTest extends \Test\TestCase {
             'error' => 'interval is invalid'
         ];
 
-        $controller = new ConfigController('file-update-notifications',
+        $controller = new ConfigController('file_upload_notification',
             $this->request,
             $this->config,
             $this->userSession,
@@ -195,7 +195,7 @@ class ConfigControllerTest extends \Test\TestCase {
             'error' => 'interval is invalid'
         ];
 
-        $controller = new ConfigController('file-update-notifications',
+        $controller = new ConfigController('file_upload_notification',
             $this->request,
             $this->config,
             $this->userSession,
@@ -226,7 +226,7 @@ class ConfigControllerTest extends \Test\TestCase {
             'error' => 'secret is invalid'
         ];
 
-        $controller = new ConfigController('file-update-notifications',
+        $controller = new ConfigController('file_upload_notification',
             $this->request,
             $this->config,
             $this->userSession,
@@ -249,7 +249,7 @@ class ConfigControllerTest extends \Test\TestCase {
         ];
         $this->expectWarning();
 
-        $controller = new ConfigController('file-update-notifications',
+        $controller = new ConfigController('file_upload_notification',
             $this->request,
             $this->config,
             $this->userSession,

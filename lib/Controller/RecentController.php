@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Controller;
+namespace OCA\FileUploadNotification\Controller;
 
 use OCP\AppFramework\OCSController;
 use OCP\AppFramework\Http;
@@ -15,7 +15,7 @@ use OCP\IRequest;
 use OCP\IUserSession;
 use OC\Files\View;
 
-use OCA\FileUpdateNotifications\Db\FileUpdateMapper;
+use OCA\FileUploadNotification\Db\FileUpdateMapper;
 
 class RecentController extends OCSController {
 

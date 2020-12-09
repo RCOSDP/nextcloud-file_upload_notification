@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Migration;
+namespace OCA\FileUploadNotification\Migration;
 
 use Closure;
 use OCP\DB\ISchemaWrapper;

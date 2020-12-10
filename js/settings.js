@@ -44,7 +44,7 @@ $(document).ready(function() {
 
                 if ('secret' in response) {
                         if (response['secret'].length > 0) {
-                                $('#encryption_secret').text(response['secret']);
+                                $('#connection_common_key').text(response['secret']);
                                 secret_exists = true;
                         }
                 }
@@ -87,12 +87,12 @@ $(document).ready(function() {
                 switchSaveButton();
         });
 
-        $('#create_secret').click(function() {
+        $('#create_connection_common_key').click(function() {
                 var url = OC.generateUrl('/apps/file_upload_notification/secret');
                 var params = {length: 16};
                 $.get(url, params, function(response) {
-                        $('#encryption_secret').text(response['secret']);
-                        $('#encryption_secret_msg').text('');
+                        $('#connection_common_key').text(response['secret']);
+                        $('#connection_common_key_msg').text('');
                         secret_exists = true;
                         switchSaveButton();
                 });
@@ -123,10 +123,10 @@ $(document).ready(function() {
                 }
 
                 if (secret_exists === false) {
-                        $('#encryption_secret_msg').text('Missin encryption secret');
+                        $('#connection_common_key_msg').text('Missin encryption secret');
                         execute = false;
                 } else {
-                        $('#encryption_secret_msg').text('');
+                        $('#connection_common_key_msg').text('');
                 }
 
                 if (execute === false) {
@@ -138,7 +138,7 @@ $(document).ready(function() {
                         id: $('#server_id').val(),
                         url: $('#destination_url').val(),
                         interval: $('#notification_interval').val(),
-                        secret: $('#encryption_secret').text()
+                        secret: $('#connection_common_key').text()
                 };
                 $.post(url, params)
                 .done(function(response) {

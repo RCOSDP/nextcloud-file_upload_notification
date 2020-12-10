@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Nextcloud package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Nextcloud 3.14159\n"
+"Report-Msgid-Bugs-To: translations\\@example.com\n"
+"POT-Creation-Date: 2020-12-10 07:08+0000\n"
+"PO-Revision-Date: 2020-12-10 07:08+0000\n"
+"Last-Translator: Hiroki Ohashi\n"
+"Language-Team: RCOS <rocs-office@nii.ac.jp>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /var/www/html/custom_apps/file_upload_notification/lib/Settings/PersonalSection.php:34
+#: /var/www/html/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:2
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:8
+msgid "File Upload Notification"
+msgstr "ファイル更新通知"
+
+#: /var/www/html/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:3
+msgid "Notify a server of file uploads"
+msgstr "ファイル更新を別サーバに通知"
+
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:13
+msgid "Connection URL"
+msgstr "接続用URL"
+
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:20
+msgid "Notification interval"
+msgstr "通知間隔"
+
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:27
+msgid "Connection ID"
+msgstr "接続用ID"
+
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:34
+msgid "Connection common key"
+msgstr "接続用共通鍵"
+
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:40
+msgid "Generate connection common key"
+msgstr "接続用共通鍵を生成"
+
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:41
+msgid "Save settings"
+msgstr "設定保存"
+
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:48
+msgid "Example of Notification"
+msgstr "通知の例"
+
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:61
+msgid "Example of API Call"
+msgstr "API 呼び出しの例"
+
+#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:67
+msgid "Example of API Call Response"
+msgstr "API 呼び出し結果の例"

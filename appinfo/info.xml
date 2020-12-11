@@ -22,7 +22,7 @@
     <bugs></bugs>
     <screenshot></screenshot>
     <dependencies>
-        <nextcloud min-version="15" max-version="19" />
+        <nextcloud min-version="18" max-version="19" />
     </dependencies>
     <settings>
         <personal>OCA\FileUploadNotification\Settings\Personal</personal>

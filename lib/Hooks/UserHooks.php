@@ -131,7 +131,7 @@ class UserHooks {
                     'method' => 'POST',
                     'header' => [
                         'Content-type: application/json',
-                        'X-Nextcloud-File-Update-Notifications-Signature: ' . $hash
+                        'X-Nextcloud-File-Upload-Notification-Signature: ' . $hash
                     ],
                     'content' => $response
                 ]

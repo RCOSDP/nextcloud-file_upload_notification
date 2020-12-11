@@ -20,7 +20,7 @@ class PersonalSection implements IIconSection {
         }
 
         public function getIcon() {
-                return $this->url->imagePath('file_upload_notification', 'changeme.svg');
+                return $this->url->imagePath('file_upload_notification', 'notification.svg');
         }
 
         public function getID() {

@@ -17,48 +17,52 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /var/www/html/custom_apps/file_upload_notification/lib/Settings/PersonalSection.php:34
-#: /var/www/html/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:2
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:8
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/lib/Settings/PersonalSection.php:31
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:2
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:8
 msgid "File Upload Notification"
 msgstr "ファイル更新通知"
 
-#: /var/www/html/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:3
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:3
 msgid "Notify a server of file uploads"
 msgstr "ファイル更新を別サーバに通知"
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:13
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:13
 msgid "Connection URL"
 msgstr "接続用URL"
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:20
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:20
 msgid "Notification interval"
 msgstr "通知間隔"
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:27
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:27
 msgid "Connection ID"
 msgstr "接続用ID"
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:34
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:34
 msgid "Connection common key"
 msgstr "接続用共通鍵"
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:40
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:40
 msgid "Generate connection common key"
 msgstr "接続用共通鍵を生成"
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:41
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:41
 msgid "Save settings"
 msgstr "設定保存"
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:48
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:48
 msgid "Example of Notification"
 msgstr "通知の例"
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:61
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:61
+msgid "Example of Receipt Notification"
+msgstr "通知受信の例"
+
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:108
 msgid "Example of API Call"
 msgstr "API 呼び出しの例"
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:67
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:118
 msgid "Example of API Call Response"
 msgstr "API 呼び出し結果の例"

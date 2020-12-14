@@ -51,8 +51,55 @@ style('file_upload_notification', 'settings');
 {   
   "id": "https://nextcloud.example.com:user001",
   "since": "1603621635",
-  "interval": "10" 
+  "min_interval": "10" 
 }
+    </pre>
+
+</div>
+
+<div class="section">
+    <h2 class="inlineblock"><?php p($l->t('Example of Receipt Notification')); ?></h2>
+
+    <pre>
+import logging
+import httplib as http
+import hmac
+from hashlib import sha256
+import json
+from flask import request
+from framework.exceptions import HTTPError
+
+from my_app import celery_check_updated_files
+
+logger = logging.getLogger(__name__)
+
+### connection common key
+SECRET = '?????????????????????'  # from configuration file or DB.
+
+# example of flask
+def notif_from_nextcloud():
+    SIGNATURE_HEADER = 'X-Nextcloud-File-Upload-Notification-Signature'
+    signature = request.headers.get(SIGNATURE_HEADER)
+    try:
+        data = json.loads(request.data)
+        provider_id = data.get('id')
+    except Exception:
+        logger.error('provider_id not found')
+        raise HTTPError(http.FORBIDDEN)
+
+    digest = hmac.new(SECRET.encode(), request.data, sha256).hexdigest()
+    if not hmac.compare_digest(signature.encode('utf-8'), digest):
+        logger.error('invalid signature')
+        raise HTTPError(http.FORBIDDEN)
+
+    since = data.get('since')
+    interval = data.get('min_interval')
+
+    # run in background task
+    celery_check_updated_files.delay(provider_id, since, interval)
+
+    # return immediately
+    return ''
     </pre>
 
 </div>
@@ -63,6 +110,10 @@ style('file_upload_notification', 'settings');
     <pre>
 curl -u test2:password -H &#39;OCS-APIRequest: true&#39; -X GET &#39;https://nextcloud.example.com/ocs/v2.php/apps/file_upload_notification/api/recent?since=1607511624&#39;
     </pre>
+
+</div>
+
+<div class="section">
 
     <h2 class="inlineblock"><?php p($l->t('Example of API Call Response')); ?></h2>
 

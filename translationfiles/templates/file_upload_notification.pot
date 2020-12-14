@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Nextcloud 3.14159\n"
 "Report-Msgid-Bugs-To: translations\\@example.com\n"
-"POT-Creation-Date: 2020-12-10 07:08+0000\n"
+"POT-Creation-Date: 2020-12-14 01:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,48 +17,52 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /var/www/html/custom_apps/file_upload_notification/lib/Settings/PersonalSection.php:34
-#: /var/www/html/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:2
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:8
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/lib/Settings/PersonalSection.php:31
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:2
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:8
 msgid "File Upload Notification"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:3
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/specialAppInfoFakeDummyForL10nScript.php:3
 msgid "Notify a server of file uploads"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:13
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:13
 msgid "Connection URL"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:20
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:20
 msgid "Notification interval"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:27
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:27
 msgid "Connection ID"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:34
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:34
 msgid "Connection common key"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:40
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:40
 msgid "Generate connection common key"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:41
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:41
 msgid "Save settings"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:48
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:48
 msgid "Example of Notification"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:61
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:61
+msgid "Example of Receipt Notification"
+msgstr ""
+
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:108
 msgid "Example of API Call"
 msgstr ""
 
-#: /var/www/html/custom_apps/file_upload_notification/templates/personal_settings.php:67
+#: /usr/src/nextcloud/custom_apps/file_upload_notification/templates/personal_settings.php:118
 msgid "Example of API Call Response"
 msgstr ""

@@ -19,7 +19,7 @@
     <category>files</category>
     <category>tools</category>
     <website></website>
-    <bugs></bugs>
+    <bugs>https://github.com/RCOSDP/nextcloud-file_upload_notification/issues</bugs>
     <screenshot></screenshot>
     <dependencies>
         <nextcloud min-version="18" max-version="19" />

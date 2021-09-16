@@ -1,10 +1,12 @@
 $(document).ready(function() {
+        var id_exists = false;
         var url_exists = false;
         var interval_exists = false;
         var secret_exists = false;
 
         var switchSaveButton = function() {
-                if (url_exists === true &&
+                if (id_exists === true &&
+                    url_exists === true &&
                     interval_exists === true &&
                     secret_exists === true) {
                         $('#save_settings').prop('disabled', false);
@@ -13,10 +15,17 @@ $(document).ready(function() {
                 }
         };
 
-        var url = OC.generateUrl('/apps/file-update-notifications/config');
+        var url = OC.generateUrl('/apps/file_upload_notification/config');
         $.get(url, function(response) {
                 if (response === null || response === undefined || response.length === 0) {
                         return;
+                }
+
+                if ('id' in response) {
+                        if (response['id'].length > 0) {
+                                $('#server_id').val(response['id']);
+                                id_exists = true;
+                        }
                 }
 
                 if ('url' in response) {
@@ -35,9 +44,21 @@ $(document).ready(function() {
 
                 if ('secret' in response) {
                         if (response['secret'].length > 0) {
-                                $('#encryption_secret').text(response['secret']);
+                                $('#connection_common_key').text(response['secret']);
                                 secret_exists = true;
                         }
+                }
+                switchSaveButton();
+        });
+
+        $('#server_id').change(function() {
+                var value = $(this).val();
+                if (value === undefined || value === null || value.length === 0) {
+                        $('#server_id_msg').text('Invalid parameter');
+                        id_exists = false;
+                } else {
+                        $('#server_id_msg').text('');
+                        id_exists = true;
                 }
                 switchSaveButton();
         });
@@ -66,12 +87,12 @@ $(document).ready(function() {
                 switchSaveButton();
         });
 
-        $('#create_secret').click(function() {
-                var url = OC.generateUrl('/apps/file-update-notifications/secret');
+        $('#create_connection_common_key').click(function() {
+                var url = OC.generateUrl('/apps/file_upload_notification/secret');
                 var params = {length: 16};
                 $.get(url, params, function(response) {
-                        $('#encryption_secret').text(response['secret']);
-                        $('#encryption_secret_msg').text('');
+                        $('#connection_common_key').text(response['secret']);
+                        $('#connection_common_key_msg').text('');
                         secret_exists = true;
                         switchSaveButton();
                 });
@@ -79,6 +100,13 @@ $(document).ready(function() {
 
         $('#save_settings').click(function() {
                 var execute = true;
+
+                if (id_exists === false) {
+                        $('#server_id_msg').text('Invalid parameter');
+                        execute = false;
+                } else {
+                        $('#server_id_msg').text('');
+                }
 
                 if (url_exists === false) {
                         $('#destination_url_msg').text('Invalid parameter');
@@ -95,21 +123,22 @@ $(document).ready(function() {
                 }
 
                 if (secret_exists === false) {
-                        $('#encryption_secret_msg').text('Missin encryption secret');
+                        $('#connection_common_key_msg').text('Missin encryption secret');
                         execute = false;
                 } else {
-                        $('#encryption_secret_msg').text('');
+                        $('#connection_common_key_msg').text('');
                 }
 
                 if (execute === false) {
                         return;
                 }
 
-                var url = OC.generateUrl('/apps/file-update-notifications/config');
+                var url = OC.generateUrl('/apps/file_upload_notification/config');
                 var params = {
+                        id: $('#server_id').val(),
                         url: $('#destination_url').val(),
                         interval: $('#notification_interval').val(),
-                        secret: $('#encryption_secret').text()
+                        secret: $('#connection_common_key').text()
                 };
                 $.post(url, params)
                 .done(function(response) {

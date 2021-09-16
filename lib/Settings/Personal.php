@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Settings;
+namespace OCA\FileUploadNotification\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
@@ -21,11 +21,11 @@ class Personal implements ISettings {
     }
 
     public function getForm() {
-        return new TemplateResponse('file-update-notifications', 'personal_settings', []);
+        return new TemplateResponse('file_upload_notification', 'personal_settings', []);
     }
 
     public function getSection() {
-        return 'file-update-notifications';
+        return 'file_upload_notification';
     }
 
     public function getPriority() {

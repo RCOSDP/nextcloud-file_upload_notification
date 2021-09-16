@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Migration;
+namespace OCA\FileUploadNotification\Migration;
 
 use Closure;
 use OCP\DB\ISchemaWrapper;
@@ -32,8 +32,8 @@ class Version00001Date20201012113852 extends SimpleMigrationStep {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
-		if (!$schema->hasTable('file_update_notifications')) {
-			$table = $schema->createTable('file_update_notifications');
+		if (!$schema->hasTable('file_upload_notif')) {
+			$table = $schema->createTable('file_upload_notif');
 			$table->addColumn('id', 'bigint', [
 				'autoincrement' => true,
 				'notnull' => true,

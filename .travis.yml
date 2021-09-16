@@ -1,0 +1,35 @@
+language: php
+
+php:
+  - '7.4'
+
+env:
+  global:
+    - NEXTCLOUD_DB=sqlite
+    - NEXTCLOUD_DB_NAME=nextcloud
+    - NEXTCLOUD_DB_USER=root
+    - NEXTCLOUD_DB_PASSWD=password
+    - NEXTCLOUD_ADMIN_NAME=admin
+    - NEXTCLOUD_ADMIN_PASSWD=password
+    - NEXTCLOUD_APP=file_upload_notification
+
+before_script:
+  - sudo apt-get update
+  - sudo apt-get install ca-certificates curl xz-utils git
+  - git clone https://github.com/nextcloud/server.git
+  - mv server/ nextcloud
+  - cd nextcloud
+  - git checkout origin/stable19 -b stable19
+  - mkdir custom_apps
+  - cp -pi ${TRAVIS_BUILD_DIR}/travis/apps.config.php config
+  - cd 3rdparty
+  - git submodule update --init
+  - cd ..
+  - php occ maintenance:install --database ${NEXTCLOUD_DB} --database-name ${NEXTCLOUD_DB_NAME} --database-user ${NEXTCLOUD_DB_USER} --database-pass ${NEXTCLOUD_DB_PASSWD} --admin-user ${NEXTCLOUD_ADMIN_NAME} --admin-pass ${NEXTCLOUD_ADMIN_PASSWD}
+  - mkdir custom_apps/${NEXTCLOUD_APP}
+  - cp -r ${TRAVIS_BUILD_DIR}/{appinfo,img,l10n,templates,translationfiles,css,js,lib,tests} custom_apps/${NEXTCLOUD_APP}
+  - php occ app:enable ${NEXTCLOUD_APP}
+
+script:
+  - phpunit --bootstrap tests/bootstrap.php custom_apps/${NEXTCLOUD_APP}/tests/Controller/ConfigControllerTest.php
+  - phpunit --bootstrap tests/bootstrap.php custom_apps/${NEXTCLOUD_APP}/tests/Controller/RecentControllerTest.php

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Hooks;
+namespace OCA\FileUploadNotification\Hooks;
 
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
@@ -10,8 +10,8 @@ use OCP\IConfig;
 use OCP\ILogger;
 use OC\Files\Node\Node;
 
-use OCA\FileUpdateNotifications\Db\FileUpdate;
-use OCA\FileUpdateNotifications\Db\FileUpdateMapper;
+use OCA\FileUploadNotification\Db\FileUpdate;
+use OCA\FileUploadNotification\Db\FileUpdateMapper;
 
 class UserHooks {
 
@@ -20,7 +20,6 @@ class UserHooks {
     private $rootFolder;
     private $mapper;
     private $logger;
-    private $grdmUriPath = '/api/v1/addons/nextcloudinstitutions/webhook/';
 
     public function __construct($appName,
                                 IConfig $config,
@@ -50,6 +49,11 @@ class UserHooks {
             $eventTime = $dateTime->getTimestamp();
             $this->logger->debug('time: ' . strval($eventTime));
 
+            if ($node->getType() === Node::TYPE_FOLDER) {
+                $this->logger->info('ignore folder');
+                return;
+            }
+
             $userSession = \OC::$server->getUserSession();
             $user = $userSession->getUser();
             $userId = $user->getUID();
@@ -77,7 +81,8 @@ class UserHooks {
             }
 
             $userConfig = json_decode($json, true);
-            $base_url = $userConfig['url'];
+            $id = $userConfig['id'];
+            $url = $userConfig['url'];
             $interval = $userConfig['interval'];
             $secret = $userConfig['secret'];
 
@@ -98,8 +103,6 @@ class UserHooks {
                     return;
                 }
             }
-            $this->logger->info('send a notification');
-            $this->config->setAppValue($this->appName, $prevTimeKey, $eventTime);
 
             /*
              * check since value
@@ -114,27 +117,29 @@ class UserHooks {
             /*
              * connect to the server
              */
-            $url = $base_url . $this->grdmUriPath;
             $this->logger->debug('url: ' . $url);
 
             $postbody = [
+                'id' => $id,
                 'min_interval' => $interval,
                 'since' => $since
             ];
             $response = json_encode($postbody);
-            $hash = hash_hmac("sha256", $json, $secret);
+            $hash = hash_hmac("sha256", $response, $secret);
             $http_opts = [
                 'http' => [
                     'method' => 'POST',
                     'header' => [
                         'Content-type: application/json',
-                        'X-Nextcloud-File-Update-Notifications-Signature: ' . $hash
+                        'X-Nextcloud-File-Upload-Notification-Signature: ' . $hash
                     ],
                     'content' => $response
                 ]
             ];
             $context = stream_context_create($http_opts);
             $contents = file_get_contents($url, false, $context);
+            $this->logger->info('send a notification');
+            $this->config->setAppValue($this->appName, $prevTimeKey, $eventTime);
         };
         $this->rootFolder->listen('\OC\Files', 'postWrite', $notification_callback);
 

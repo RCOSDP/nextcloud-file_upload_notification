@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\FileUpdateNotifications\Db;
+namespace OCA\FileUploadNotification\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\QBMapper;
@@ -12,7 +12,7 @@ use OCP\IDBConnection;
 class FileUpdateMapper extends QBMapper {
 
     public function __construct(IDBConnection $db) {
-        parent::__construct($db, 'file_update_notifications', FileUpdate::class);
+        parent::__construct($db, 'file_upload_notif', FileUpdate::class);
     }
 
     public function find(int $fileid, int $mtime) {

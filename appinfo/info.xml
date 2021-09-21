@@ -5,7 +5,7 @@
     <name>File Upload Notification</name>
     <summary>Notify a server of file uploads</summary>
     <description>Notify a server of file uploads</description>
-    <version>0.1</version>
+    <version>0.1.1</version>
     <licence>apache</licence>
     <author>National Institute of Infomatics</author>
     <types>

@@ -17,6 +17,7 @@ use OC\Files\View;
 
 use OCA\FileUploadNotification\Db\FileUpdateMapper;
 use OCA\FileUploadNotification\Db\FileCacheExtendedMapper;
+use Psr\Log\LoggerInterface;
 
 class RecentController extends OCSController {
 
@@ -34,7 +35,7 @@ class RecentController extends OCSController {
                                 IUserSession $userSession,
                                 FileUpdateMapper $updateMapper,
                                 FileCacheExtendedMapper $cacheExtendedMapper,
-                                ILogger $logger) {
+                                LoggerInterface $logger) {
         parent::__construct($appName, $request);
         $this->config = $config;
         $this->rootFolder = $rootFolder;

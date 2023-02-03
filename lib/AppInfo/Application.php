@@ -19,15 +19,13 @@ class Application extends App {
         /**
          * Controllers
          */
-        $container->registerService('UserHooks', function() {
-            $container = $this->getContainer();
-            $server = $container->getServer();
+        $container->registerService('UserHooks', function($c) {
             return new UserHooks(
                 self::APP_ID,
-                $server->getConfig(),
-                $server->getRootFolder(),
-                new FileUpdateMapper($server->getDatabaseConnection()),
-                $server->getLogger()
+                $c->get('ServerContainer')->getConfig(),
+                $c->get('ServerContainer')->getRootFolder(),
+                new FileUpdateMapper($c->get('ServerContainer')->getDatabaseConnection()),
+                $c->get('ServerContainer')->getLogger()
             );
         });
     }
@@ -38,6 +36,6 @@ class Application extends App {
 
     public function registerHooks() {
         $container = $this->getContainer();
-        $container->query('UserHooks')->register();
+        $container->get('UserHooks')->register();
     }
 }

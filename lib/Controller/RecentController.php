@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 declare(strict_types=1);
 
@@ -222,9 +222,11 @@ class RecentController extends OCSController {
         /*
          * set since value for hook function
          */
-        $sinceKey = $userId . '#since';
-        $this->config->setAppValue($this->appName, $sinceKey, $totalRecords[0]->getUploadTime());
-        $this->logger->info('set since: ' . strval($totalRecords[0]->getUploadTime()));
+        if ($totalRecords[0] !== null) {
+            $sinceKey = $userId . '#since';
+            $this->config->setAppValue($this->appName, $sinceKey, $totalRecords[0]->getUploadTime());
+            $this->logger->info('set since: ' . strval($totalRecords[0]->getUploadTime()));
+        }
 
         return new DataResponse(
             $data,

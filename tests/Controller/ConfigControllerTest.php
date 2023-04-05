@@ -7,7 +7,7 @@ namespace OCA\FileUploadNotification\Tests\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IConfig;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
@@ -37,7 +37,7 @@ class ConfigControllerTest extends \Test\TestCase {
         $this->userSession = $this->getMockBuilder(IUserSession::class)->disableOriginalConstructor()->getMock();
         $this->userSession->method('getUser')->willReturn($this->user);
 
-        $this->logger = $this->getMockBuilder(ILogger::class)->getMock();
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
 
     protected function tearDown() :void {

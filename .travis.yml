@@ -1,7 +1,7 @@
 language: php
 
 php:
-  - '7.4'
+  - '8.1'
 
 env:
   global:
@@ -19,7 +19,7 @@ before_script:
   - git clone https://github.com/nextcloud/server.git
   - mv server/ nextcloud
   - cd nextcloud
-  - git checkout origin/stable19 -b stable19
+  - git checkout origin/stable25 -b stable25
   - mkdir custom_apps
   - cp -pi ${TRAVIS_BUILD_DIR}/travis/apps.config.php config
   - cd 3rdparty

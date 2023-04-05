@@ -12,6 +12,7 @@ use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IRequest;
 use OCP\IUserSession;
+use Psr\Log\LoggerInterface;
 
 class ConfigController extends OCSController {
 
@@ -23,7 +24,7 @@ class ConfigController extends OCSController {
                                 IRequest $request,
                                 IConfig $config,
                                 IUserSession $userSession,
-                                ILogger $logger) {
+                                LoggerInterface $logger) {
         parent::__construct($appName, $request);
         $this->config = $config;
         $this->logger = $logger;

@@ -17,6 +17,7 @@ use OC\Files\View;
 
 use OCA\FileUploadNotification\Db\FileUpdateMapper;
 use OCA\FileUploadNotification\Db\FileCacheExtendedMapper;
+use Psr\Log\LoggerInterface;
 
 class RecentController extends OCSController {
 
@@ -34,7 +35,7 @@ class RecentController extends OCSController {
                                 IUserSession $userSession,
                                 FileUpdateMapper $updateMapper,
                                 FileCacheExtendedMapper $cacheExtendedMapper,
-                                ILogger $logger) {
+                                LoggerInterface $logger) {
         parent::__construct($appName, $request);
         $this->config = $config;
         $this->rootFolder = $rootFolder;
@@ -221,9 +222,11 @@ class RecentController extends OCSController {
         /*
          * set since value for hook function
          */
-        $sinceKey = $userId . '#since';
-        $this->config->setAppValue($this->appName, $sinceKey, $totalRecords[0]->getUploadTime());
-        $this->logger->info('set since: ' . strval($totalRecords[0]->getUploadTime()));
+        if ($totalRecords[0] !== null) {
+            $sinceKey = $userId . '#since';
+            $this->config->setAppValue($this->appName, $sinceKey, $totalRecords[0]->getUploadTime());
+            $this->logger->info('set since: ' . strval($totalRecords[0]->getUploadTime()));
+        }
 
         return new DataResponse(
             $data,

@@ -9,7 +9,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Files\NotFoundException;
 use OCP\IConfig;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
@@ -54,7 +54,7 @@ class RecentControllerTest extends \Test\TestCase {
 
         $this->cacheExtendedMapper = $this->getMockBuilder(FileCacheExtendedMapper::class)->disableOriginalConstructor()->getMock();
 
-        $this->logger = $this->getMockBuilder(ILogger::class)->getMock();
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
     }
 
     protected function tearDown() :void {
